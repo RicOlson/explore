@@ -5,7 +5,17 @@ public class Character {
     int armor;
     int attack;
     int dodgeChance;
-    char type;
+    Room room;
+    Tile tile;
+
+    Character (String name, String id, int health, int armor, int attack, int dodgeChance) {
+        this.name = name;
+        this.id = id;
+        this.health = health;
+        this.armor = armor;
+        this.attack = attack;
+        this.dodgeChance = dodgeChance;
+    }
 
     final void runTurn() {
         move();
@@ -70,15 +80,9 @@ public class Character {
         return dodgeChance;
     }
 
-    public  void setDodgeChance(int dodgeChance) {
+    public void setDodgeChance(int dodgeChance) {
         this.dodgeChance = dodgeChance;
     }
 
-    public char getType() {
-        return type;
-    }
-
-    public void setType(char type) {
-        this.type = type;
-    }
+    public
 }

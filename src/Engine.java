@@ -28,6 +28,10 @@ public class Engine {
             runRound();
             turnNumber++;
         }
+//        while (endCondition()) {
+//            runRound();
+//            turnNumber++;
+//        }
     }
 
     private void runRound() {
@@ -46,7 +50,7 @@ public class Engine {
     private ArrayList<Player> initPlayers() {
         ArrayList<Player> players = new ArrayList<>();
 
-        Player player1 = new Player();
+        Player player1 = new Player("Legend", "PLA01", 15, 3, 2, 10);
         players.add(player1);
 
         // initialize player characters
@@ -57,7 +61,7 @@ public class Engine {
     private ArrayList<Monster> initMonsters() {
         ArrayList<Monster> monsters = new ArrayList<>();
 
-        Monster monster1 = new Monster();
+        Monster monster1 = new Monster("Wolf", "MON01", 10, 1, 4, 20);
         monsters.add(monster1);
 
         // initialize player characters
@@ -68,7 +72,7 @@ public class Engine {
     private ArrayList<NPC> initNPCs() {
         ArrayList<NPC> npcs = new ArrayList<>();
 
-        NPC npc1 = new NPC();
+        NPC npc1 = new NPC("John Smith", "NPC01", 5, 2, 2, 15);
         npcs.add(npc1);
 
         // initialize player characters
@@ -76,7 +80,11 @@ public class Engine {
         return npcs;
     }
 
-    private void endGame() {
+    private boolean endCondition() {
+        return false;
+    }
 
+    private void endGame() {
+        // print some end of game stuff
     }
 }
