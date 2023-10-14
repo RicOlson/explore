@@ -1,48 +1,55 @@
 import java.util.ArrayList;
 
 public class Room {
-    String name;
-    int id;
-    int x;
-    int y;
-    final private int[] enterDoor;
-    final private int[] exitDoor;
-    Tile current;
-    ArrayList<Tile> tiles = new ArrayList<>();
-    ArrayList<Character> characters = new ArrayList<>();
+    final private String name;
+    final private int id;
+    final private int[] enterDoorXY;
+    final private int[] exitDoorXY;
+    private Tile enterDoor;
+    private Tile exitDoor;
+    final private int x;
+    final private int y;
+    private ArrayList<Tile> tiles = new ArrayList<>();
+    private ArrayList<Character> characters = new ArrayList<>();
 
-    Room(String name, int id, int x, int y, int[] enterDoor, int[] exitDoor) {
+    Room(String name, int id, int x, int y, int[] enterDoorXY, int[] exitDoorXY) {
         this.name = name;
         this.id = id;
         this.x = x;
         this.y = y;
-        this.enterDoor = enterDoor;
-        this.exitDoor = exitDoor;
+        this.enterDoorXY = enterDoorXY;
+        this.exitDoorXY = exitDoorXY;
     }
 
-    public int[] getEnterDoor() {
-        return enterDoor;
+    private void initCharacters () {
+        this.characters = new ArrayList<>();
     }
 
-    public int[] getExitDoor() {
+    private void initEnterDoor() {
+        for (Tile t: this.getRoomTiles()) {
+            if (t.getX() == enterDoorXY[0] && t.getY() == enterDoorXY[1]) {
+                enterDoor = t;
+            }
+        }
+    }
+
+    private void initExitDoor() {
+        for (Tile t: this.getRoomTiles()) {
+            if (t.getX() == exitDoorXY[0] && t.getY() == exitDoorXY[1]) {
+                exitDoor = t;
+            }
+        }
+    }
+
+    public Tile getEnterDoor() { return enterDoor; }
+
+    public Tile getExitDoor() {
         return exitDoor;
     }
 
-    public void enterRoom (Character c) {
-        characters.add(c);
-    }
-
-    public void exitRoom (Character c) {
-        characters.remove(c);
-    }
-
-    public void switchRooms (Character c, Room r) {
-        characters.remove(c);
-        r.characters.add(c);
-    }
-
-    public void initRoomTiles (int x, int y) {
+    public void initRoom () {
         ArrayList<Tile> tiles = new ArrayList<>();
+        initCharacters();
 
         for (int i = -x; i <= x; i++) {
             for (int j = -y; j <= y; j++) {
@@ -51,6 +58,8 @@ public class Room {
         }
 
         this.tiles = tiles;
+        this.initEnterDoor();
+        this.initExitDoor();
     }
 
     public ArrayList<Tile> getRoomTiles () {
@@ -69,14 +78,16 @@ public class Room {
         return x;
     }
 
-
     public int getY() {
         return y;
     }
 
-    public void moveNorth() {
-        if (current.y+1 <= y){
-            current = current.getNeighbors().get(0).;
-        }
+    public ArrayList<Character> getCharacters() {
+        return characters;
+    }
+
+    public void switchRooms (Character c, Room r) {
+        characters.remove(c);
+        r.characters.add(c);
     }
 }
