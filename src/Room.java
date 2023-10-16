@@ -50,16 +50,42 @@ public class Room {
     public void initRoom () {
         ArrayList<Tile> tiles = new ArrayList<>();
         initCharacters();
+        int xEnter = 0;
+        int yEnter = 0;
+        int xExit = 0;
+        int yExit = 0;
 
         for (int i = -x; i <= x; i++) {
-            for (int j = -y; j <= y; j++) {
+            for (int j = y; j >= -y; j--) {
                 tiles.add(new Tile(this, i, j));
+                if (i == -x && j == 0) {
+                    xEnter = i;
+                    yEnter = j;
+
+                }
+                else if(i == x && j == 0) {
+                    xExit = i;
+                    yExit = j;
+                }
             }
         }
 
         this.tiles = tiles;
         this.initEnterDoor();
         this.initExitDoor();
+        getTileByRoomCoordinates(this, xEnter, yEnter).setIsEnterTile(true);
+        getTileByRoomCoordinates(this, xExit, yExit).setIsExitTile(true);
+
+    }
+
+    public Tile getTileByRoomCoordinates (Room room, int x, int y) {
+        for (int i = 0; i < tiles.size(); i++) {
+            if (tiles.get(i).getX() == x && tiles.get(i).getY() == y) {
+                return tiles.get(i);
+            }
+        }
+
+        return null;
     }
 
     public ArrayList<Tile> getRoomTiles () {
